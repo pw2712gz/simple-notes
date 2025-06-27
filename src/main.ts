@@ -139,4 +139,15 @@ function renderNotes() {
     card.append(contentEl, saveStatus, footer);
     notesList.appendChild(card);
   });
+
+  if ("serviceWorker" in navigator) {
+    window.addEventListener("load", () => {
+      navigator.serviceWorker
+        .register("/sw.js")
+        .then(() => {
+          console.log("[PWA] Service worker registered");
+        })
+        .catch(console.error);
+    });
+  }
 }
