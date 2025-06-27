@@ -1,72 +1,202 @@
+:root {
+  --bg: #f4f4f5;
+  --text: #323232;
+  --border: #c9c9cc;
+  --primary: #4caf50;
+  --primary-dark: #3d8b40;
+  --danger: #b23c3c;
+  --success: #4b5563;
+  --card-bg: #ffffff;
+  --card-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+}
+
+* {
+  box-sizing: border-box;
+}
+
 body {
   margin: 0;
-  font-family: 'Courier New', monospace;
-  background-color: #1e1e1e;
-  color: #e5e5e5;
+  font-family: system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--text);
 }
 
 .container {
-  max-width: 600px;
+  max-width: 720px;
   margin: 2rem auto;
-  padding: 1rem;
+  padding: 0 1rem;
+}
+
+.top-bar {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
 }
 
 h1 {
-  text-align: center;
-  color: #22c55e;
+  margin: 0;
+  font-size: 1.6rem;
+  font-weight: 500;
+}
+
+.save-note {
+  margin: 0.25rem 0 0;
+  font-size: 0.75rem;
+  color: #6b7280;
+}
+
+#search-input {
+  width: 230px;
+  padding: 0.55rem 0.75rem;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  font-size: 0.95rem;
+  background: #fff;
+}
+
+@media (max-width: 600px) {
+  .top-bar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  #search-input {
+    width: 100%;
+  }
 }
 
 form {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: 0.75rem;
+  margin-bottom: 2rem;
+}
+
+textarea,
+button {
+  font-family: inherit;
+  font-size: 1rem;
 }
 
 textarea {
-  padding: 0.5rem;
-  background: #2a2a2a;
-  border: 1px solid #444;
-  color: #fff;
+  padding: 0.75rem;
+  border: 1px solid var(--border);
+  border-radius: 6px;
   resize: none;
+  min-height: 120px;
+  background: #fff;
+}
+
+.char-count {
+  font-size: 0.75rem;
+  color: #6d6d6d;
+  text-align: right;
+  margin-top: -0.25rem;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
 }
 
 button {
-  align-self: flex-end;
-  padding: 0.5rem 1rem;
-  background-color: #22c55e;
-  color: #000;
+  padding: 0.55rem 1.25rem;
   border: none;
+  border-radius: 6px;
+  background: var(--primary);
+  color: #fff;
   cursor: pointer;
+  transition: background 0.15s;
+}
+
+button:hover {
+  background: var(--primary-dark);
 }
 
 #notes-list {
-  margin-top: 2rem;
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 1.25rem;
 }
 
 .note {
-  background: #2a2a2a;
-  padding: 1rem;
-  border: 1px solid #444;
-  position: relative;
-  animation: fadeIn 0.3s ease-in-out;
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  box-shadow: var(--card-shadow);
+  animation: fadeIn 0.2s ease-out;
+  overflow: hidden;
 }
 
 .note textarea {
   width: 100%;
-  background: transparent;
   border: none;
-  color: inherit;
-  resize: vertical;
+  padding: 1rem;
+  resize: none;
+  font-size: 0.98rem;
+  line-height: 1.4;
+  background: #fff;
 }
 
-.note-actions {
+.note textarea:focus {
+  outline: none;
+}
+
+.note-footer {
   display: flex;
-  justify-content: flex-end;
+  align-items: center;
   gap: 0.5rem;
-  margin-top: 0.5rem;
+  border-top: 1px solid var(--border);
+  padding: 0.5rem 0.75rem;
+  background: #f8f8f8;
+}
+
+.note-meta {
+  font-size: 0.75rem;
+  color: #555;
+  flex-grow: 1;
+}
+
+.copy-btn,
+.delete-btn {
+  font-size: 0.85rem;
+  padding: 0.35rem 0.8rem;
+  border-radius: 4px;
+  border: none;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.copy-btn {
+  background: #e5e7eb;
+  color: #333;
+}
+
+.copy-btn:hover {
+  background: #d4d4d8;
+}
+
+.delete-btn {
+  background: #fef2f2;
+  color: var(--danger);
+}
+
+.delete-btn:hover {
+  background: #fee2e2;
+}
+
+.save-status {
+  font-size: 0.75rem;
+  color: var(--success);
+  padding: 0 1rem 0.5rem;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.save-status.visible {
+  opacity: 1;
 }
 
 @keyframes fadeIn {
@@ -74,8 +204,21 @@ button {
     opacity: 0;
     transform: translateY(4px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
   }
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }
